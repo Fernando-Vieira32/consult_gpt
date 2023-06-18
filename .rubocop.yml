@@ -69,3 +69,6 @@ Style/EvalWithLocation:
 
 Style/HashSyntax:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
