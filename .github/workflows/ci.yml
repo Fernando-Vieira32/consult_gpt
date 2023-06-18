@@ -13,3 +13,24 @@ jobs:
           bundler-cache: true
       - name: Lint Ruby files
         run: bin/qa
+      - name: Set pipeline status
+        if: always()
+        uses: actions/github-script@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const { context } = require('@actions/github');
+            const octokit = context.getOctokit();
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const sha = context.sha;
+            const result = process.exitCode === 0 ? 'success' : 'failure';
+            octokit.repos.createCommitStatus({
+              owner,
+              repo,
+              sha,
+              state: result,
+              context: 'Ruby on Rails CI',
+              description: 'Pipeline status'
+            });
