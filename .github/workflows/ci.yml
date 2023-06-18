@@ -1,34 +1,16 @@
-name: Ruby on Rails CI
+name: "Ruby on Rails CI"
 on:
   push:
-jobs:
+jobs:      
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e
         with:
-          ruby-version: 2.7
+          bundler-cache: true
       - name: Lint Ruby files
         run: bin/qa
-      - name: Set pipeline status
-        if: always()
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const github = require('@actions/github');
-            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-            const owner = process.env.GITHUB_REPOSITORY_OWNER;
-            const repo = process.env.GITHUB_REPOSITORY;
-            const sha = process.env.GITHUB_SHA;
-            const result = process.exitCode === 0 ? 'success' : 'failure';
-            octokit.repos.createCommitStatus({
-              owner,
-              repo,
-              sha,
-              state: result,
-              context: 'Ruby on Rails CI',
-              description: 'Pipeline status'
-            });
+      
