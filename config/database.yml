@@ -17,5 +17,3 @@ test:
 production:
   <<: *default
   database: consult_gpt_production
-  username: consult_gpt
-  password: <%= ENV["CONSULT_GPT_DATABASE_PASSWORD"] %>
