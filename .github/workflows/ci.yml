@@ -20,11 +20,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           script: |
-            const { context } = require('@actions/github');
-            const octokit = context.getOctokit();
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const sha = context.sha;
+            const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
+            const owner = process.env.GITHUB_REPOSITORY_OWNER;
+            const repo = process.env.GITHUB_REPOSITORY;
+            const sha = process.env.GITHUB_SHA;
             const result = process.exitCode === 0 ? 'success' : 'failure';
             octokit.repos.createCommitStatus({
               owner,
