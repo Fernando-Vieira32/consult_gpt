@@ -1,21 +1,41 @@
-# Use uma imagem base do Ruby
-FROM ruby:3.1.0
 
-# Instale as dependências do sistema
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+FROM ruby:3.1.0-slim
 
-# Configure o diretório de trabalho do projeto
-WORKDIR /app
+RUN apt-get update -qq && apt-get install -y \
+  build-essential \
+  default-libmysqlclient-dev \
+  git \
+  libpq-dev \
+  libvips \
+  pkg-config \
+  bash \
+  bash-completion \
+  libffi-dev \
+  tzdata \
+  postgresql \
+  nodejs \
+  npm \
+  yarn \
+  imagemagick \
+  chromium \
+  chromium-driver
 
-# Instale as gems do projeto
+# DEFINE PATH
+ENV INSTALL_PATH /consult_gpt
+
+RUN mkdir -p "/root/.config/chromium/Crash Reports/pending"
+
+# CREATE DIR
+RUN mkdir -p $INSTALL_PATH
+WORKDIR $INSTALL_PATH
+
+# BUILD GEMFILE
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-# Copie o código do projeto para o contêiner
-COPY . .
+# COPY PROJECT FOR CONTAINER
+COPY . $INSTALL_PATH
 
-# Exponha a porta que o servidor Rails estará ouvindo
+RUN bundle install
+
 EXPOSE 3000
-
-# Configure o comando padrão para executar o servidor Rails
-CMD ["rails", "server", "-b", "0.0.0.0"]
