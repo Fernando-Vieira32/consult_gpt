@@ -27,8 +27,8 @@ group :development do
 end
 
 group :test do
-  gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem 'rspec-collection_matchers'
+  gem "shoulda-matchers"
+  gem "simplecov"
 end
