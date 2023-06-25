@@ -10,18 +10,20 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+end
 
-  config.filter_run_when_matching :focus
+unless ENV['NO_COVERAGE']
+  require 'simplecov'
 
-  config.example_status_persistence_file_path = 'spec/examples.txt'
+  SimpleCov.start 'rails' do
+    minimum_coverage_by_file 100
+    minimum_coverage 100
 
-  config.disable_monkey_patching!
-
-  config.default_formatter = 'doc' if config.files_to_run.one?
-
-  config.profile_examples = 10
-
-  config.order = :random
-
-  Kernel.srand config.seed
+    add_filter '/channels'
+    add_filter '/models'
+    add_filter '/helpers'
+    add_filter '/jobs'
+    add_filter '/mailers'
+    add_filter '/controllers'
+  end
 end
