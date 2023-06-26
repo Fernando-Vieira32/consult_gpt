@@ -18,8 +18,12 @@ group :development, :test do
   gem "byebug", platforms: %i[ mri mingw x64_mingw ]
   gem 'dotenv-rails'
   gem 'rspec-rails'
+  gem 'pry-nav'
+  gem 'pry-rails'
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'rspec-mocks'
+  
 end
 
 group :development do
