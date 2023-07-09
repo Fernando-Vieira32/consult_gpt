@@ -15,11 +15,15 @@ gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "byebug", platforms: %i[ mri mingw x64_mingw ]
   gem 'dotenv-rails'
   gem 'rspec-rails'
+  gem 'pry-nav'
+  gem 'pry-rails'
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'rspec-mocks'
+  
 end
 
 group :development do
