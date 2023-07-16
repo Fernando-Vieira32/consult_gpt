@@ -24,6 +24,5 @@ unless ENV['NO_COVERAGE']
     add_filter '/helpers'
     add_filter '/jobs'
     add_filter '/mailers'
-    add_filter '/controllers'
   end
 end
